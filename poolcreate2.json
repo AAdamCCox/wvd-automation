@@ -1,0 +1,47 @@
+{
+   "id":"msteams-pool",
+   "vmSize":"standard_a2_v2",
+   "virtualMachineConfiguration":{
+      "imageReference":{
+         "virtualMachineImageId": "<ImagePath>"
+      },
+      "nodeAgentSkuId":"batch.node.windows amd64",
+      "windowsConfiguration":{
+         "enableAutomaticUpdates":false
+      },
+      "nodePlacementConfiguration":{
+         "policy":"regional"
+      }
+   },
+   "networkConfiguration":{
+      "publicIPAddressConfiguration":{
+         "provision":"batchmanaged"
+      }
+   },
+   "enableInterNodeCommunication":false,
+   "taskSlotsPerNode":1,
+   "taskSchedulingPolicy":{
+      "nodeFillType":"pack"
+   },
+   "applicationPackageReferences": [
+        {
+            "applicationId": "test"
+        }
+    ],
+   "certificateReferences": [
+        {
+            "thumbprint": "26ff1d618308c0974b7ea8b40aab7428c90bfee9",
+            "thumbprintAlgorithm": "sha1",
+            "storeLocation": "LocalMachine",
+            "storeName": "My",
+            "visibility": [
+                "starttask",
+                "task",
+                "remoteuser"
+            ]
+        }
+    ],
+   "enableAutoScale": true,
+   "autoScaleFormula": "startingNumberOfVMs = 0;\nmaxNumberofVMs = 5;\npendingTaskSamplePercent = $PendingTasks.GetSamplePercent(180 * TimeInterval_Second);\npendingTaskSamples = pendingTaskSamplePercent < 70 ? startingNumberOfVMs : avg($PendingTasks.GetSample(180 * TimeInterval_Second));\n$TargetDedicatedNodes=min(maxNumberofVMs, pendingTaskSamples);\n$NodeDeallocationOption = taskcompletion;",
+   "autoScaleEvaluationInterval":"PT5M"
+}
