@@ -23,6 +23,16 @@
    "taskSchedulingPolicy":{
       "nodeFillType":"pack"
    },
+   "mountConfiguration": [
+        {
+            "azureFileShareConfiguration": {
+                "accountName": "<StorageAccountName>"
+				"accountKey": "<StorageAccountKey>",
+                "azureFileUrl": "https://<StorageAccountName>.file.core.windows.net/<FileShareName>",
+                "relativeMountPath": "S"
+            }
+        }
+    ],
    "applicationPackageReferences": [
         {
             "applicationId": "test"
@@ -30,7 +40,7 @@
     ],
    "certificateReferences": [
         {
-            "thumbprint": "26ff1d618308c0974b7ea8b40aab7428c90bfee9",
+            "thumbprint": "<CertThumbprint>",
             "thumbprintAlgorithm": "sha1",
             "storeLocation": "LocalMachine",
             "storeName": "My",
